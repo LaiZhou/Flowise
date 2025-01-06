@@ -128,6 +128,13 @@ class PineconeLlamaIndex_VectorStores implements INode {
                 namespace: pineconeNamespace,
                 embedModel: embeddings
             })
+            //clearIndex first
+            try {
+                const index = await pcvs.index()
+                await index.namespace('').deleteAll()
+            } catch (e) {
+                console.error(e)
+            }
 
             const flattenDocs = docs && docs.length ? flatten(docs) : []
             const finalDocs = []
