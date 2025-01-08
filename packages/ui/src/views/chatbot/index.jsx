@@ -120,7 +120,15 @@ const ChatbotFull = () => {
                             chatflowid={chatflow.id}
                             apiHost={baseURL}
                             chatflowConfig={chatbotOverrideConfig}
-                            theme={{ chatWindow: chatbotTheme }}
+                            theme={{
+                                chatWindow: chatbotTheme,
+                                button: {
+                                    backgroundColor: '#54a54d'
+                                },
+                                footer: {
+                                    showFooter: false
+                                }
+                            }}
                         />
                     )}
                     <LoginDialog show={loginDialogOpen} dialogProps={loginDialogProps} onConfirm={onLoginClick} />
