@@ -5,6 +5,7 @@ import { DocumentStore } from '../../database/entities/DocumentStore'
 import { InternalFlowiseError } from '../../errors/internalFlowiseError'
 import { DocumentStoreDTO } from '../../Interface'
 import { getRateLimiter } from '../../utils/rateLimit'
+import preProcessMarkdown from '../../biz/preProcessMarkdown'
 
 const getRateLimiterMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -201,6 +202,10 @@ const processLoader = async (req: Request, res: Response, next: NextFunction) =>
         }
         const docLoaderId = req.params.loaderId
         const body = req.body
+        //过滤预处理md内容
+        if (body.loaderName === 'Text File') {
+            body.loaderConfig.txtFile = preProcessMarkdown.modify(body.loaderConfig.txtFile)
+        }
         const apiResponse = await documentStoreService.processLoader(body, docLoaderId)
         return res.json(apiResponse)
     } catch (error) {
@@ -263,6 +268,10 @@ const previewFileChunks = async (req: Request, res: Response, next: NextFunction
             )
         }
         const body = req.body
+        //过滤预处理md内容
+        if (body.loaderName === 'Text File') {
+            body.loaderConfig.txtFile = preProcessMarkdown.modify(body.loaderConfig.txtFile)
+        }
         body.preview = true
         const apiResponse = await documentStoreService.previewChunks(body)
         return res.json(apiResponse)
