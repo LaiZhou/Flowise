@@ -23,6 +23,8 @@ import { AgentExecutor, ToolCallingAgentOutputParser } from '../../../src/agents
 import { Moderation, checkInputs, streamResponse } from '../../moderation/Moderation'
 import { formatResponse } from '../../outputparsers/OutputParserHelpers'
 import { addImagesToMessages, llmSupportsVision } from '../../../src/multiModalUtils'
+import { z } from 'zod'
+import { StructuredOutputParser } from '@langchain/core/output_parsers'
 
 class ToolAgent_Agents implements INode {
     label: string
@@ -233,6 +235,13 @@ class ToolAgent_Agents implements INode {
     }
 }
 
+const zodSchema = z.object({
+    content: z.string().describe(`answer to the user's question,not include the image urls at the end.`),
+    imageUrls: z.string().array().optional().describe(`the end image url array extracted from the answer.`)
+})
+const structParser = StructuredOutputParser.fromZodSchema(zodSchema)
+const formatInstructions = structParser.getFormatInstructions()
+
 const prepareAgent = async (
     nodeData: INodeData,
     options: ICommonObject,
@@ -248,12 +257,14 @@ const prepareAgent = async (
     const inputKey = memory.inputKey ? memory.inputKey : 'input'
     const prependMessages = options?.prependMessages
 
-    let prompt = ChatPromptTemplate.fromMessages([
-        ['system', systemMessage],
+    let prompt = await ChatPromptTemplate.fromMessages([
+        ['system', systemMessage + `\nAnswer the user query. Wrap the output in \`json\` tags\\n{format_instructions}`],
         new MessagesPlaceholder(memoryKey),
         ['human', `{${inputKey}}`],
         new MessagesPlaceholder('agent_scratchpad')
-    ])
+    ]).partial({
+        format_instructions: formatInstructions
+    })
 
     let promptVariables = {}
     const chatPromptTemplate = nodeData.inputs?.chatPromptTemplate as ChatPromptTemplate
