@@ -85,7 +85,13 @@ const ChatbotFull = () => {
                 }
 
                 try {
-                    parsedConfig = { ...parsedConfig, ...JSON.parse(chatflowData.chatbotConfig) }
+                    parsedConfig = {
+                        ...parsedConfig,
+                        ...JSON.parse(chatflowData.chatbotConfig),
+                        footer: {
+                            showFooter: false
+                        }
+                    }
                     setChatbotTheme(parsedConfig)
                     if (parsedConfig.overrideConfig) {
                         setChatbotOverrideConfig(parsedConfig.overrideConfig)
@@ -124,9 +130,6 @@ const ChatbotFull = () => {
                                 chatWindow: chatbotTheme,
                                 button: {
                                     backgroundColor: '#54a54d'
-                                },
-                                footer: {
-                                    showFooter: false
                                 }
                             }}
                         />
