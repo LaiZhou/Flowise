@@ -90,6 +90,9 @@ const ChatbotFull = () => {
                         ...JSON.parse(chatflowData.chatbotConfig),
                         footer: {
                             showFooter: false
+                        },
+                        feedback: {
+                            color: '#54a54d'
                         }
                     }
                     setChatbotTheme(parsedConfig)
