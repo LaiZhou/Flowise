@@ -258,6 +258,7 @@ const prepareAgent = async (
     const prependMessages = options?.prependMessages
 
     let prompt = await ChatPromptTemplate.fromMessages([
+        // ['system', systemMessage],
         ['system', systemMessage + `\nAnswer the user query. Wrap the output in \`json\` tags\\n{format_instructions}`],
         new MessagesPlaceholder(memoryKey),
         ['human', `{${inputKey}}`],
