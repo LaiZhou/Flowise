@@ -25,6 +25,7 @@ import { formatResponse } from '../../outputparsers/OutputParserHelpers'
 import { addImagesToMessages, llmSupportsVision } from '../../../src/multiModalUtils'
 import { z } from 'zod'
 import { StructuredOutputParser } from '@langchain/core/output_parsers'
+import { ChatOpenAI } from '@langchain/openai'
 
 class ToolAgent_Agents implements INode {
     label: string
@@ -324,9 +325,16 @@ const prepareAgent = async (
     if (model.bindTools === undefined) {
         throw new Error(`This agent requires that the "bindTools()" method be implemented on the input model.`)
     }
-
-    const modelWithTools = model.bindTools(tools)
-
+    let modelWithTools
+    if (model instanceof ChatOpenAI) {
+        modelWithTools = model.bindTools(tools).bind({
+            response_format: {
+                type: 'json_object'
+            }
+        })
+    } else {
+        modelWithTools = model.bindTools(tools)
+    }
     const runnableAgent = RunnableSequence.from([
         {
             [inputKey]: (i: { input: string; steps: ToolsAgentStep[] }) => i.input,
