@@ -12,7 +12,7 @@ import useApi from '@/hooks/useApi'
 
 //Const
 import { baseURL } from '@/store/constant'
-import { FullPageChat } from "@/views/chatbot/FullPageChat";
+import { FullPageChat } from '@/views/chatbot/FullPageChat'
 
 // ==============================|| Chatbot ||============================== //
 
