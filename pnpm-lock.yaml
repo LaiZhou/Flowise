@@ -165,7 +165,7 @@ importers:
         specifier: ^0.0.7
         version: 0.0.7(encoding@0.1.13)(openai@4.57.3(encoding@0.1.13)(zod@3.22.4))
       '@langchain/community':
-        specifier: ^0.3.11
+        specifier: ^0.3.14
         version: 0.3.14(6ab3xuwm3jgrubrqnob5nctf4m)
       '@langchain/core':
         specifier: 0.3.18
