@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { FullPageChat } from 'flowise-embed-react'
 import { useNavigate } from 'react-router-dom'
 
 // Project import
@@ -13,6 +12,7 @@ import useApi from '@/hooks/useApi'
 
 //Const
 import { baseURL } from '@/store/constant'
+import { FullPageChat } from "@/views/chatbot/FullPageChat";
 
 // ==============================|| Chatbot ||============================== //
 

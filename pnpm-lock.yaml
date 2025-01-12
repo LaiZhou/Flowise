@@ -736,9 +736,6 @@ importers:
       flowise-embed:
         specifier: link:../../../FlowiseChatEmbed
         version: link:../../../FlowiseChatEmbed
-      flowise-embed-react:
-        specifier: link:../../../FlowiseEmbedReact
-        version: link:../../../FlowiseEmbedReact
       flowise-react-json-view:
         specifier: '*'
         version: 1.21.7(@types/react@18.2.65)(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
