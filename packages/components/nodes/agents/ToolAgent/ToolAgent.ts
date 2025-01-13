@@ -238,7 +238,11 @@ class ToolAgent_Agents implements INode {
 
 const zodSchema = z.object({
     content: z.string().describe(`answer to the user's question,not include the image urls at the end.`),
-    imageUrls: z.string().array().optional().describe(`the end image url array extracted from the answer.`)
+    imageUrls: z.string().array().optional().describe(`the end image url array extracted from the answer.`),
+    intent: z
+        .string()
+        .describe(`the user's intent, should be one of the intents list I described in system prompt, the default is 'unknown'.`),
+    recommendIntent: z.string().describe(`ai need to recommend an intent to describe user's intent`)
 })
 const structParser = StructuredOutputParser.fromZodSchema(zodSchema)
 const formatInstructions = structParser.getFormatInstructions()
