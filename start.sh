@@ -9,6 +9,7 @@ git pull
 cd ../FlowiseChatEmbed
 git pull
 yarn install
+rm -rf dist
 yarn build
 cd ../Flowise
 pnpm build
