@@ -12,5 +12,6 @@ yarn install
 rm -rf dist
 yarn build
 cd ../Flowise
+pnpm install
 pnpm build
 pnpm start
