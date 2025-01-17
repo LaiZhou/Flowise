@@ -12,7 +12,10 @@ yarn install
 rm -rf dist
 yarn build
 cd ../Flowise
+cd packages/ui
 rm -rf packages/ui/build
+pnpm build
+cd ../../
 pnpm install
 pnpm build
 pnpm start
