@@ -133,7 +133,7 @@ class Deepseek_ChatModels implements INode {
 
     async init(nodeData: INodeData, _: string, options: ICommonObject): Promise<any> {
         const temperature = nodeData.inputs?.temperature as string
-        const modelName = nodeData.inputs?.modelName as string
+        let modelName = nodeData.inputs?.modelName as string
         const maxTokens = nodeData.inputs?.maxTokens as string
         const topP = nodeData.inputs?.topP as string
         const frequencyPenalty = nodeData.inputs?.frequencyPenalty as string
@@ -151,13 +151,18 @@ class Deepseek_ChatModels implements INode {
 
         const cache = nodeData.inputs?.cache as BaseCache
 
+        if(modelName==='deepseek-chat'){
+            modelName='deepseek-r1'
+        }else{
+            modelName='deepseek-v3'
+        }
         const obj: Partial<OpenAIChatInput> & BaseChatModelParams & { configuration?: ClientOptions & LegacyOpenAIInput } = {
             temperature: parseFloat(temperature),
             modelName,
-            openAIApiKey,
+            openAIApiKey:,
             streaming: streaming ?? true
         }
-
+       
         if (maxTokens) obj.maxTokens = parseInt(maxTokens, 10)
         if (topP) obj.topP = parseFloat(topP)
         if (frequencyPenalty) obj.frequencyPenalty = parseFloat(frequencyPenalty)
@@ -186,7 +191,7 @@ class Deepseek_ChatModels implements INode {
         const model = new ChatOpenAI({
             ...obj,
             configuration: {
-                baseURL: this.baseURL,
+                baseURL: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
                 ...parsedBaseOptions
             }
         })
