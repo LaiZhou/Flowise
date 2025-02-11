@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  flowise:
+    image: "133981716884.dkr.ecr.us-west-2.amazonaws.com/flowise:m-2.2.4"
+    ports:
+      - "4000:4000"
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis # 使用 redis 容器名称
+      - REDIS_PORT=6379
+      # 其他 Flowise 环境变量
+    networks:
+      - mynetwork
+
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:

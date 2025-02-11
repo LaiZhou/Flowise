@@ -18,7 +18,7 @@ WORKDIR /usr/src
 # Copy app source
 COPY . .
 
-RUN pnpm install
+RUN --mount=type=cache,id=pnpm,target=/pnpm pnpm install 
 
 RUN pnpm build
 

@@ -151,18 +151,18 @@ class Deepseek_ChatModels implements INode {
 
         const cache = nodeData.inputs?.cache as BaseCache
 
-        if(modelName==='deepseek-chat'){
-            modelName='deepseek-r1'
-        }else{
-            modelName='deepseek-v3'
+        if (modelName === 'deepseek-chat') {
+            modelName = 'deepseek-r1'
+        } else {
+            modelName = 'deepseek-v3'
         }
         const obj: Partial<OpenAIChatInput> & BaseChatModelParams & { configuration?: ClientOptions & LegacyOpenAIInput } = {
             temperature: parseFloat(temperature),
             modelName,
-            openAIApiKey:,
+            openAIApiKey,
             streaming: streaming ?? true
         }
-       
+
         if (maxTokens) obj.maxTokens = parseInt(maxTokens, 10)
         if (topP) obj.topP = parseFloat(topP)
         if (frequencyPenalty) obj.frequencyPenalty = parseFloat(frequencyPenalty)
