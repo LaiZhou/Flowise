@@ -12,7 +12,7 @@ services:
       - REDIS_PORT=6379
       # 其他 Flowise 环境变量
     volumes:
-      - ./.env:/app/packages/server/.env # 将本地 .env 文件挂载到容器指定目录
+      - ./.env:/usr/src/packages/server/.env # 将本地 .env 文件挂载到容器指定目录
     networks:
       - mynetwork
 
