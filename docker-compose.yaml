@@ -8,9 +8,11 @@ services:
     depends_on:
       - redis
     environment:
-      - REDIS_HOST=redis # 使用 redis 容器名称
+      - REDIS_HOST=redis
       - REDIS_PORT=6379
       # 其他 Flowise 环境变量
+    volumes:
+      - ./packages/server/.env:/app/packages/server/.env # 将本地 .env 文件挂载到容器指定目录
     networks:
       - mynetwork
 
